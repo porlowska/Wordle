@@ -13,7 +13,7 @@ export default observer(function Home() {
       {new Array(5).fill(0).map((_, i)=>(
                 <Guess word={"test"} guess={"guess"} isGuessed={true} />
             ))}
-      <Qwerty/>
+      <Qwerty store={"store"}/>
     </div>
   );
 })

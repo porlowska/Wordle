@@ -5,7 +5,7 @@ import Grid from "./components/grid/Grid"
 import Keyboard from "./components/keyboard/Keyboard"
 
 export default function Home(){
-
+  const [isClient, setIsClient] = useState(false)
   const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)]);
   const [guess, setGuess] = useState(Array(6).fill(''));
   const [tries, setTries] = useState(0);
@@ -56,30 +56,35 @@ export default function Home(){
   };
 
   useEffect(() => {
-    //init();
+    init();
+    setIsClient(true)},[])
+
+  useEffect(() => {
     window.addEventListener('keyup', handleKeyup);
     return () => {
       window.removeEventListener('keyup', handleKeyup);
     };
-  }, []);
+  });
 
 
 
 
 
   return (
-    <div className='flex flex-col bg-gray-100 h-screen w-screen items-center justify-center'>
+    isClient ? 
+    (<div className='flex flex-col bg-gray-100 h-screen w-screen items-center justify-center'>
       <h1 className='text-6xl font-bold uppercase'>Wordle</h1>
 
-      <Grid word={word} guess={guess} tries={tries} onKeyup={handleKeyup} />
+      <Grid word={word} guess={guess} tries={tries} />
       words: {word} <br></br>
       guess: {guess}<br></br>
       tries: {tries}
 
-      {/* {won && <h2>Won</h2>}
+      {won && <h2>Won</h2>}
       {lost && <h2>Lost</h2>}
-      {(won || lost) && <button onClick={init}>Play Again</button>} */}
+      {(won || lost) && <button onClick={init}>Play Again</button>}
       <Keyboard/>
-    </div>
+    </div>) 
+    : <div></div>
   );
 }
